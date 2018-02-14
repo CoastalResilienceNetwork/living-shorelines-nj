@@ -1,15 +1,13 @@
 define([
-	"dojo/_base/declare", "esri/tasks/query", "esri/tasks/QueryTask", "esri/graphicsUtils"
+	"dojo/_base/declare", "esri/tasks/query", "esri/tasks/QueryTask", "esri/graphicsUtils", "esri/layers/FeatureLayer", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleMarkerSymbol", "dojo/_base/Color"
 ],
-function ( declare, Query, QueryTask, graphicsUtils ) {
+function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSymbol, SimpleMarkerSymbol, Color ) {
         "use strict";
 
         return declare(null, {
 			eventListeners: function(t){
-				t.county = "";
-				t.atts = [];
 				// counties select
-				$("#" + t.id + "selectCounty").chosen({allow_single_deselect:false, width:"240px"})
+				$("#" + t.id + "selectCounty").chosen({allow_single_deselect:false, width:"98%"})
 					.change(function(c){
 						t.county = c.target.value;
 						$('#' + t.id + 'selectMuni').empty()
@@ -26,17 +24,23 @@ function ( declare, Query, QueryTask, graphicsUtils ) {
 						})
 						$('#' + t.id + 'selectMuni').trigger("chosen:updated");
 						$(c.target).parent().next().show()
+						t.esriapi.clearLayers(t);
 					});
 				// municipalities select
-				$("#" + t.id + "selectMuni").chosen({allow_single_deselect:false, width:"240px"})
+				$("#" + t.id + "selectMuni").chosen({allow_single_deselect:false, width:"98%"})
 					.change(function(c){
+						t.mun = c.target.value;
+						t.esriapi.zoomToMuni(t);
+						$("#" + t.id + "sl-type input").prop("checked", false);
 						$(".ls-choice-wraps").hide()
+						t.esriapi.clearLayers(t);
 						$(".ls-first-choice-wrap").css("display", "flex")
 					})
 				// first choice radios
 				$("#" + t.id + "sl-type input").click(function(c){
 					t.slType= c.currentTarget.value;
 					$(".ls-choice-wraps").hide()
+					t.esriapi.clearLayers(t);
 					$(".dis-pro").css("display", "flex")
 					$("#" + t.id + "dis-pro input").prop("checked", false)
 					$("#" + t.id + "view-results input:radio[name='techs']").prop("checked", false)
@@ -44,6 +48,7 @@ function ( declare, Query, QueryTask, graphicsUtils ) {
 				// second choice radios	
 				$("#" + t.id + "dis-pro input").click(function(c){
 					$(".ls-choice-wraps").hide()
+					t.esriapi.clearLayers(t);
 					$(".dis-pro").css("display", "flex")
 					$(".view-results").css("display", "flex")
 					$(".ls-results-wrap").hide();
@@ -52,16 +57,12 @@ function ( declare, Query, QueryTask, graphicsUtils ) {
 				// third choice radios
 				$("#" + t.id + "view-results input").click(function(c){
 					t.viewResults = c.currentTarget.value;
-					if (t.viewResults == "all-tech"){
+					if (t.viewResults == "allTech"){
 						$("#" + t.id + "all-tech-info").slideDown();
-						if (t.slType == "tidal-marsh"){
-							// show tidal-marsh layer
-						}
-						if (t.slType == "forest-beach-bulk"){
-							// show forest-beach-bulk layer
-						}
+						t.esriapi.allTechniques(t);
 					}
 					if (t.viewResults == "ind-tech"){
+						t.esriapi.clearLayers(t);
 						$("#" + t.id + "all-tech-info").slideUp();
 						// show forth choice
 					}

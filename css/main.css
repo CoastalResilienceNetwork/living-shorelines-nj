@@ -8,7 +8,7 @@
 	margin-bottom:5px;
 }
 .all-tech-info{
-	margin-left:10px; padding:0 10px 10px 10px;
+	padding:0 0px 10px 6px;
 }
 .ati-instr{
 	color:#2F6384; margin-bottom:6px;
@@ -17,5 +17,8 @@
 	text-decoration:underline; font-weight:900;
 }
 .ati-wrap{
-	box-shadow:0 1px 1px rgba(16,22,26,.2); padding:6px; border:1px solid #ddd;
+	box-shadow:0 1px 1px rgba(16,22,26,.2); padding:6px; border:1px solid #ddd; display:none; font-size:12px;
+}
+.all-tech-atts{
+	margin-left:5px; margin-bottom:1px;
 }

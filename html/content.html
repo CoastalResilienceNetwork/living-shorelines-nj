@@ -15,13 +15,13 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 	</div>
 	<div id="sl-type" class="ls-first-choice-wrap sl-type">	
 		<h4>1. Select the shoreline type</h4>
-		<label class="form-component" for="tidal-marsh">
-			<input type="radio" id="tidal-marsh" value="tidal-marsh" name="sl-type">
+		<label class="form-component" for="tidalMarsh">
+			<input type="radio" id="tidalMarsh" value="tidalMarsh" name="sl-type">
 			<div class="check"></div>
 			<span class="form-text">Tidal Marsh</span>
 		</label>
-		<label class="form-component" for="forest-beach-bulk">
-			<input type="radio" id="forest-beach-bulk" value="forest-beach-bulk" name="sl-type">
+		<label class="form-component" for="forestBeachBulk">
+			<input type="radio" id="forestBeachBulk" value="forestBeachBulk" name="sl-type">
 			<div class="check"></div>
 			<span class="form-text">Forested, Beach, or Bulkhead</span>
 		</label>
@@ -36,8 +36,8 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 	</div>
 	<div id="view-results" class="ls-choice-wraps view-results">
 		<h4>3. How would you like to view results?</h4>
-		<label class="form-component" for="all-tech">
-			<input type="radio" id="all-tech" value="all-tech" name="techs">
+		<label class="form-component" for="allTech">
+			<input type="radio" id="allTech" value="allTech" name="techs">
 			<div class="check"></div>
 			<span class="form-text">Show All Techniques in One Map</span>
 		</label>
@@ -46,21 +46,50 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 			<div class="ati-wrap">
 				<div class="ati-hdr">Shoreline Enhancement Techniques</div>
 				<div id="tm-techs-wrap" class="tm-techs-wrap">	
-					<ul style="margin-left:-20px; margin-bottom:0">
-						<li><a href="">Nature-Based Living Shoreline</a>: <span id="nblsParams">X parameters met</span></li>
-						<li><a href="">Living Reef Breakwater</a>: <span id="lrbParams">X parameters met</span></li>
-						<li><a href="">Marsh Sill</a>: <span id="msParams">X parameters met</span></li>
-						<li><a href="">Breakwater</a>: <span id="bwParams">X parameters met</span></li>
-						<li><a href="">Ecologically Enhanced Revetment</a>: <span id="eerParams">X parameters met</span></li>
-					</ul>
-					<div style="margin-left:5px;">Total Techniques:<span>x</span></div>
+					<div class="tidalMarsh-atts all-tech-atts"><a href="">Nature-Based Living Shoreline</a>: <b><span id="-NBLS"></span></b></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts"><a href="">Living Reef Breakwater</a>: <b><span id="-LivingReef"></span></b></div>
+					<div class="tidalMarsh-atts all-tech-atts"><a href="">Marsh Sill</a>: <b><span id="-Sill"></span></b></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts"><a href="">Breakwater</a>: <b><span id="-Breakwater"></span></b></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts"><a href="">Ecologically Enhanced Revetment</a>: <b><span id="-Revetment"></span></b></div>
+					<div class="forestBeachBulk-atts all-tech-atts"><a href="">Beach Restoration</a>: <b><span id="-Beach"></span></b></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts"><b>Total Techniques: <span id="-TotalTechniques"></span></b></div>
 				</div>	
 			</div>	
 		</div>
 		<label class="form-component" for="ind-tech">
 			<input type="radio" id="ind-tech" value="ind-tech" name="techs">
 			<div class="check"></div>
-			<span class="form-text">Show Information on Individual Techniques</span>
+			<span class="form-text">Show Information on Individual Techniques</span>	
 		</label>
-	</div>	
+	</div>
+	<div id="view-results" class="ls-choice-wraps view-results">
+		<h4>4. Select shoreline enhancement technique</h4>
+		<!-- Add tidal marsh wrapper to these -->
+		<label class="form-component" for="nblsEt">
+			<input type="radio" id="nblsEt" value="2" name="eTechs">
+			<div class="check"></div>
+			<span class="form-text">Nature-based Living Shoreline</span>
+		</label>
+		<label class="form-component" for="lrbEt">
+			<input type="radio" id="lrbEt" value="4" name="eTechs">
+			<div class="check"></div>
+			<span class="form-text">Living Reef Breakwater</span>
+		</label>
+		<label class="form-component" for="msEt">
+			<input type="radio" id="msEt" value="6" name="eTechs">
+			<div class="check"></div>
+			<span class="form-text">Marsh Sill</span>
+		</label>
+		<label class="form-component" for="bwEt">
+			<input type="radio" id="bwEt" value="8" name="eTechs">
+			<div class="check"></div>
+			<span class="form-text">Breakwater</span>
+		</label>
+		<label class="form-component" for="eerEt">
+			<input type="radio" id="eerEt" value="10" name="eTechs">
+			<div class="check"></div>
+			<span class="form-text">Ecologically Enhanced Revetment</span>
+		</label>
+		<!--Add forested radios here with wrapper around them. Value is layer number -->
+	</div>		
 </div>

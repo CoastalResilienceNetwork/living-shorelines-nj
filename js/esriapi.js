@@ -1,23 +1,18 @@
 define([
 	"esri/layers/ArcGISDynamicMapServiceLayer", "esri/geometry/Extent", "esri/SpatialReference", "esri/tasks/query" ,"esri/tasks/QueryTask", "dojo/_base/declare", "esri/layers/FeatureLayer", 
 	"esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleFillSymbol","esri/symbols/SimpleMarkerSymbol", "esri/graphic", "dojo/_base/Color", "dojo/_base/lang",
-	"esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
+	"esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters", "esri/renderers/SimpleRenderer"
 ],
 function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, QueryTask, declare, FeatureLayer, 
 			SimpleLineSymbol, SimpleFillSymbol, SimpleMarkerSymbol, Graphic, Color, lang,
-			IdentifyTask, IdentifyParameters) {
+			IdentifyTask, IdentifyParameters, SimpleRenderer) {
         "use strict";
 
         return declare(null, {
 			esriApiFunctions: function(t){	
 				// Add dynamic map service
 				t.dynamicLayer = new ArcGISDynamicMapServiceLayer(t.url, {opacity:0.7});
-				t.dynamicLayer1 = new ArcGISDynamicMapServiceLayer(t.url, {opacity:0.7});
 				t.map.addLayer(t.dynamicLayer);
-				t.map.addLayer(t.dynamicLayer1);
-				if (t.obj.visibleLayers1.length > 0){	
-					t.dynamicLayer1.setVisibleLayers(t.obj.visibleLayers1);
-				}
 				if (t.obj.visibleLayers.length > 0){	
 					t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				}
@@ -52,118 +47,81 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					})
 					$('#' + t.id + 'selectCounty').trigger("chosen:updated");			
 				});
-				// handle map clicks
-				t.map.setMapCursor("pointer")
-				var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0,0,255]), 2),new Color([255,255,255,0]));
-				var sms = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255,255,0]), 2), new Color([174,68,82,1]));
-				t.map.on("click", lang.hitch(t, function(evt) {
-					t.map.setMapCursor("pointer")
-					if (t.open == "yes"){
-						t.map.graphics.clear();
-						var pnt = evt.mapPoint;
-						var q1 = new Query();
-						var qt1 = new QueryTask(t.url + "/" + t.lyrs.DL_DT_ER_UV);
-						q1.geometry = pnt;
-						q1.outFields = ["*"];
-						q1.returnGeometry = true;
-						qt1.execute(q1, function(e){
-							if (e.features.length > 0){
-								t.atts = e.features[0].attributes;
-								var geo = e.features[0].geometry;
-								t.map.graphics.add(new Graphic(geo,sfs))													
-								$("#" + t.id + "ind-att-wrap span").each(function(i,v){
-									var n = t.clicks.roundTo(t.atts[$(v).attr("class")], 1)
-									$(v).html(n);
-								})
-								$("#" + t.id + "click-selected").html("Selected Area Attributes");	
-								$("#" + t.id + "me-sh-atts").slideDown();	
-							}else{
-								t.esriapi.clearAtts(t);
-							}
-						})	
-						var scIndex = t.obj.visibleLayers1.indexOf("21");
-						if (scIndex > -1) {
-							var scq = new Query();
-							var scqt = new QueryTask(t.url + "/21")
-							var centerPoint = new esri.geometry.Point(evt.mapPoint.x,evt.mapPoint.y,evt.mapPoint.spatialReference);
-							var mapWidth = t.map.extent.getWidth();
-							var mapWidthPixels = t.map.width;
-							var pixelWidth = mapWidth/mapWidthPixels;
-							// change the tolerence below to adjust how many pixels will be grabbed when clicking on a point or line
-							var tolerance = 10 * pixelWidth;
-							var pnt1 = evt.mapPoint;
-							var ext = new esri.geometry.Extent(1,1, tolerance, tolerance, evt.mapPoint.spatialReference);
-							scq.geometry = ext.centerAt(centerPoint);
-							scq.outFields = ["*"];
-							scq.returnGeometry = true;
-							scqt.execute(scq, function(e){
-								if (e.features.length > 0){
-									t.scAtts = e.features[0].attributes;
-									var geo = e.features[0].geometry;
-									t.map.graphics.add(new Graphic(geo,sms))
-									$(".sc-att-wrap span").each(function(i,v){
-										var field = v.id.split("-").pop()
-										var val = t.scAtts[field]
-										if (val == -99){
-											val = "N/A"
-										}else{
-											val = t.clicks.roundTo(val,1)
-											val = val + "%"
-										}
-										$("#" + v.id).html(val)
-										$("#" + t.id + "scLabel").html("<b>Selected Core</b>")
-										$(".sc-att-wrap").show()
-									})
-								}else{
-									$("#" + t.id + "scLabel").html("Click points for more info")
-									$(".sc-att-wrap").hide()
-								}	
-							})	 
-						}
-						var scIndex = t.obj.visibleLayers1.indexOf("23");
-						if (scIndex > -1) {
-							//create identify tasks and setup parameters
-							var identifyTask = new IdentifyTask(t.url);
-							var identifyParams = new IdentifyParameters();
-							identifyParams.tolerance = 1;
-							identifyParams.returnGeometry = true;
-							identifyParams.layerIds = [23];
-							identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL;
-							identifyParams.width = t.map.width;
-							identifyParams.height = t.map.height;
-							identifyParams.geometry = evt.mapPoint;
-          					identifyParams.mapExtent = t.map.extent;
-          					
-          					var deferred = identifyTask.execute(identifyParams);
-            				deferred.addCallback(function (response) {
-            					if (response[0]){
-	            					var pv = response[0].feature.attributes['Pixel Value'];
-    	        					if (isNaN(pv)){
-										$("#" + t.id + "sdLabel").html("Click raster for more info")
-    	        						$(".sd-att-wrap").hide()
-    	        					}else{
-    	        						pv = t.clicks.roundTo(pv,1)  
-    	        						$("#" + t.id + "PixelValue").html(pv + "%")
-    	        						$("#" + t.id + "sdLabel").html("Selected Pixel Value");
-    	        						$(".sd-att-wrap").show()
-    	        					}	
-    	        				}else{
-    	        					$("#" + t.id + "sdLabel").html("Click raster for more info")
-    	        					$(".sd-att-wrap").hide()
-    	        				}
-            				});	
-						}	
+				// symbol for point clicks
+				t.pntSym = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 8, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0,255,0]), 1.5), new Color([255,255,0,0.1]));
+				t.map.on ("extent-change", function(e,x,b,l){	 
+					t.l = e.lod.level	
+					if (t.l < 18) { t.pntSym.size = 10; }
+					if (t.l == 18){ t.pntSym.size = 20; }
+					if (t.l == 19){ t.pntSym.size = 42; }	
+					if (t.l > 16) { 
+						//$('#' + t.sliderpane.id + 'idIntro').hide();
 					}
-				}))
-				$("#" + t.id + "close-atts").click(function(){
-					t.esriapi.clearAtts(t);
-				})
+				});	
+				
+				
 			},
-			clearAtts: function(t){
+			zoomToMuni: function(t){
+				var q = new Query();
+				var qt = new QueryTask(t.url + "/0" );
+				q.where = "MUN = '" + t.mun + "'";
+				q.returnGeometry = true;
+				q.outFields = ["OBJECTID"];
+				qt.execute(q, function(e){
+					t.map.setExtent(e.features[0].geometry.getExtent(), true);	
+				});	
+			},
+			allTechniques: function(t){
+				t.obj.visibleLayers = [];
+				t.obj.visibleLayers.push(t[t.viewResults + "_" + t.slType + "_ras"])
+				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+				// feature layer for all techniques click			
+				t.featureLayerOD = new FeatureLayer(t.url + "/" + t[t.viewResults + "_" + t.slType + "_pnt"], { mode: esri.layers.FeatureLayer.ONDEMAND, opacity:"0", outFields:"*" } );
+				t.featureLayerOD.setRenderer(new SimpleRenderer(t.pntSym));
+				
+				t.featureLayerOD.on("mouse-over", function(evt){
+					t.map.setMapCursor("pointer");
+				});
+				t.featureLayerOD.on("mouse-out", function(evt){
+					t.map.setMapCursor("default");
+				});
+				t.featureLayerOD.on("mouse-down", function(evt){
+					var atts = evt.graphic.attributes;
+					$(".all-tech-atts").hide();
+					$("." + t.slType + "-atts").show();
+					$(".ati-wrap").slideDown();
+					$("#" + t.id + "tm-techs-wrap span").each(function(i,v){
+						var field = v.id.split("-").pop();
+						var fieldThresh = field + "Threshold"
+						var fieldParams = field + "ParametersMet"
+						if (atts[field]){
+							$("#" + v.id).html(atts[field])
+						}else{
+							if (atts[fieldThresh] == 0){
+								$("#" + v.id).html("Not Applicable/Not Used")	
+							}
+							if (atts[fieldThresh] == 1){
+								$("#" + v.id).html("No - " + atts[fieldParams] + " parameters met")
+							}
+							if (atts[fieldThresh] == 2){
+								$("#" + v.id).html("Yes - " + atts[fieldParams] + " parameters met")
+							}
+						}
+					})
+					t.map.graphics.clear();
+					t.selectedGraphic = new Graphic(evt.graphic.geometry,t.pntSym);
+					t.map.graphics.add(t.selectedGraphic);
+				});
+				t.map.addLayer(t.featureLayerOD);
+			},
+			clearLayers: function(t){
+				if (t.featureLayerOD){
+					t.map.removeLayer(t.featureLayerOD);
+				}
+				t.obj.visibleLayers = [];
+				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				t.map.graphics.clear();
-				$("#" + t.id + "click-selected").html("Click individual rankings for more info");
-				$("#" + t.id + "me-sh-atts").slideUp();
-			} 				
+			}				
 		});
     }
 );
