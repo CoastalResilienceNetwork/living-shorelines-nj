@@ -1,9 +1,9 @@
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
 	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/text!./obj.json", 
-	"dojo/text!./html/content.html", './js/esriapi', './js/clicks', './js/variables', 'dojo/_base/lang'	
+	"dojo/text!./html/content.html", "dojo/text!./html/info-graphic.html", './js/esriapi', './js/clicks', './js/variables', 'dojo/_base/lang'	
 ],
-function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, esriapi, clicks, variables, lang ) {
+function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, infoGraphic, esriapi, clicks, variables, lang ) {
 	return declare(PluginBase, {
 		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
 		toolbarName: "Living Shoreline", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
@@ -85,6 +85,12 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			var idUpdate0 = content.replace(/for="/g, 'for="' + this.id);	
 			var idUpdate = idUpdate0.replace(/id="/g, 'id="' + this.id);
 			$('#' + this.id).html(idUpdate);
+			// add info-graphic div
+			this.infoDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:0 1px 2px rgba(0,0,0,0.6); border:1px solid #999; height:385px; overflow-y:hidden;' });
+			this.infoID = this.infoDiv.id;
+			dom.byId('map-0').appendChild(this.infoDiv.domNode);
+			//
+			$('#' + this.infoID).html(infoGraphic);
 			// Set up variables
 			this.variables.makeVariables(this);
 			// Click listeners

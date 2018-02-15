@@ -67,6 +67,22 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						// show forth choice
 					}
 				})
+				$("#" + t.id + "etInfoIcon").click(function(c){
+					t.picSrc = "Nature-based_Living_Shoreline"
+					var selRad = $('input[name=teTechs]:checked').parent().find('span').html()
+					if ( selRad ){
+						t.picSrc = selRad.replace(/ /g,"_");
+					}
+					$("#lsInfoToggle input[value='" + t.picSrc + "']").trigger("click");
+					$("#" + t.infoID).show();
+				})
+				$(".infopiccloser-nj").click(function(){
+					$("#" + t.infoID).hide();
+				})
+				$("#lsInfoToggle input").click(function(c){
+					t.picSrc = c.currentTarget.value;
+					$("#lsnj-img").prop("src", "plugins/living-shorelines-nj/images/" + t.picSrc + ".jpg" );
+				})
 			},
 			clearInputs: function(t){
 

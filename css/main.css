@@ -17,8 +17,14 @@
 	text-decoration:underline; font-weight:900;
 }
 .ati-wrap{
-	box-shadow:0 1px 1px rgba(16,22,26,.2); padding:6px; border:1px solid #ddd; display:none; font-size:12px;
+	box-shadow:0 1px 1px rgba(16,22,26,.2); padding:6px; border:1px solid #ddd; display:none; 
 }
 .all-tech-atts{
 	margin-left:5px; margin-bottom:1px;
+}
+.tinner{
+	min-height: 200px!important;
+}	
+.h3InfoIcon {
+    margin-bottom:-4px; margin-left:3px; cursor:pointer;
 }
