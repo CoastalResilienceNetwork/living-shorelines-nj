@@ -86,7 +86,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			var idUpdate = idUpdate0.replace(/id="/g, 'id="' + this.id);
 			$('#' + this.id).html(idUpdate);
 			// add info-graphic div
-			this.infoDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:0 1px 2px rgba(0,0,0,0.6); border:1px solid #999; height:385px; overflow-y:hidden;' });
+			this.infoDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; height:390px; overflow-y:hidden; border-radius:3px;' });
 			this.infoID = this.infoDiv.id;
 			dom.byId('map-0').appendChild(this.infoDiv.domNode);
 			//

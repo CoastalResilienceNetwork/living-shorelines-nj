@@ -8,10 +8,14 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 			<option></option>
 		</select>
 	</div>
-	<div class="chosen-wrap" style="margin-bottom:0px; margin-left:3px; display:none;">
+	<div class="chosen-wrap" style="margin-bottom:10px; margin-left:3px; display:none;">
 		<select data-placeholder="Choose a Municipality" id="selectMuni" class="chosen">
 			<option></option>
 		</select>
+	</div>
+	<div id="ls-btn-wrap" class="ls-btn-wrap">
+		<button id="showMunRep" class="button button-primary">Municipal Summary</button>
+		<button id="showEtInfo" class="button button-primary">Enhancement Techniques</button>
 	</div>
 	<div id="sl-type" class="ls-first-choice-wrap sl-type">	
 		<h4>1. Select the shoreline type</h4>
@@ -43,16 +47,16 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 		</label>
 		<div id="all-tech-info" class="ls-results-wrap all-tech-info">
 			<div class="ati-instr">Click on individual squares on the map to see how many of the techniques are appropriate for that area.</div>
-			<div class="ati-wrap">
+			<div id="ati-wrap" class="ati-wrap">
 				<div class="ati-hdr">Shoreline Enhancement Techniques</div>
 				<div id="tm-techs-wrap" class="tm-techs-wrap">	
-					<div class="tidalMarsh-atts all-tech-atts">Nature-based Living Shoreline: <b><span id="-NBLS"></span></b></div>
-					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Living Reef Breakwater: <b><span id="-LivingReef"></span></b></div>
-					<div class="tidalMarsh-atts all-tech-atts">Marsh Sill: <b><span id="-Sill"></span></b></div>
-					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Breakwater: <b><span id="-Breakwater"></span></b></div>
-					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Ecologically Enhanced Revetment: <b><span id="-Revetment"></span></b></div>
-					<div class="forestBeachBulk-atts all-tech-atts">Beach Restoration: <b><span id="-Beach"></span></b></div>
-					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts"><b>Total Techniques: <span id="-TotalTechniques"></span></b></div>
+					<div class="tidalMarsh-atts all-tech-atts">Nature-based Living Shoreline: <span id="-NBLS"></span></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Living Reef Breakwater: <span id="-LivingReef"></span></div>
+					<div class="tidalMarsh-atts all-tech-atts">Marsh Sill: <span id="-Sill"></span></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Breakwater: <span id="-Breakwater"></span></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Ecologically Enhanced Revetment: <span id="-Revetment"></span></div>
+					<div class="forestBeachBulk-atts all-tech-atts">Beach Restoration: <span id="-Beach"></span></div>
+					<div class="tidalMarsh-atts forestBeachBulk-atts all-tech-atts">Total Techniques: <span id="-TotalTechniques"></span></div>
 				</div>	
 			</div>	
 		</div>
@@ -62,8 +66,8 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 			<span class="form-text">Show Information on Individual Techniques</span>	
 		</label>
 	</div>
-	<div id="view-results" class="ls-choice-wraps view-results">
-		<h4>4. Select shoreline enhancement technique<img id="etInfoIcon" src="plugins/living-shorelines-nj/images/info.png" alt="show enhancement techniques info" class="h3InfoIcon"></h4>
+	<div id="view-ind-techs" class="ls-choice-wraps view-ind-techs">
+		<h4>4. Select shoreline enhancement technique</h4>
 		<!-- Add tidal marsh wrapper to these -->
 		<div class="tidalMarsh-etWrap etWrap" id="tidalMarsh-etWrap">
 			<label class="form-component" for="nblsEt">
@@ -93,7 +97,26 @@ The unique ContentPane id makes all the element ids unique and prevents duplicat
 			</label>
 		</div>
 		<div class="forestBeachBulk-etWrap etWrap" id="forestBeachBulk-etWrap">
-			
+			<label class="form-component" for="brFt">
+				<input type="radio" id="brFt" value="15" name="fbTechs">
+				<div class="check"></div>
+				<span class="form-text">Beach Restoration</span>
+			</label><br>
+			<label class="form-component" for="lrbFt">
+				<input type="radio" id="lrbFt" value="17" name="fbTechs">
+				<div class="check"></div>
+				<span class="form-text">Living Reef Breakwater</span>
+			</label><br>
+			<label class="form-component" for="bwFt">
+				<input type="radio" id="bwFt" value="19" name="fbTechs">
+				<div class="check"></div>
+				<span class="form-text">Breakwater</span>
+			</label><br>
+			<label class="form-component" for="eerFt">
+				<input type="radio" id="eerFt" value="21" name="fbTechs">
+				<div class="check"></div>
+				<span class="form-text">Ecologically Enhanced Revetment</span>
+			</label><br>
 		</div>
 	</div>		
 </div>

@@ -89,22 +89,26 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					var atts = evt.graphic.attributes;
 					$(".all-tech-atts").hide();
 					$("." + t.slType + "-atts").show();
+					$(".ati-instr").hide();
 					$(".ati-wrap").slideDown();
 					$("#" + t.id + "tm-techs-wrap span").each(function(i,v){
 						var field = v.id.split("-").pop();
 						var fieldThresh = field + "Threshold"
 						var fieldParams = field + "ParametersMet"
 						if (atts[field]){
-							$("#" + v.id).html(atts[field])
+							$("#" + v.id).html("<b>" + atts[field] + "</b>")
 						}else{
 							if (atts[fieldThresh] == 0){
 								$("#" + v.id).html("Not Applicable/Not Used")	
+								$("#" + v.id).parent().css("font-weight", "normal");
 							}
 							if (atts[fieldThresh] == 1){
-								$("#" + v.id).html("No - " + atts[fieldParams] + " parameters met")
+								$("#" + v.id).html("No - " + atts[fieldParams] + " params met")
+								$("#" + v.id).parent().css("font-weight", "normal");
 							}
 							if (atts[fieldThresh] == 2){
-								$("#" + v.id).html("Yes - " + atts[fieldParams] + " parameters met")
+								$("#" + v.id).html("Yes - " + atts[fieldParams] + " params met")
+								$("#" + v.id).parent().css("font-weight", "bold");
 							}
 						}
 					})
@@ -121,6 +125,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.obj.visibleLayers = [];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				t.map.graphics.clear();
+				$("#" + t.id + "ati-wrap").slideUp();
 			}				
 		});
     }

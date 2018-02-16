@@ -7,24 +7,33 @@
 .ls-choice-wraps label, .ls-first-choice-wrap label{
 	margin-bottom:5px;
 }
+.ls-btn-wrap{
+	margin-left:3px; display:none;
+}
 .all-tech-info{
-	padding:0 0px 10px 6px;
+	padding:0px;
 }
 .ati-instr{
-	color:#2F6384; margin-bottom:6px;
+	color:#2F6384; margin:0 10px 6px 21px;
 }
 .ati-hdr{
 	text-decoration:underline; font-weight:900;
 }
 .ati-wrap{
-	box-shadow:0 1px 1px rgba(16,22,26,.2); padding:6px; border:1px solid #ddd; display:none; 
+	padding:8px 6px 6px 10px; background:#fbfbfb; box-sizing:border-box; border:1px solid #ddd; display:none; margin-bottom:10px; box-shadow:1px 1px 1px 0px rgba(0, 0, 0, 0.4) inset;
+}
+.all-tech-atts:last-of-type{
+	border-top:1px solid #ddd; margin-top:4px; padding-top:4px;
 }
 .all-tech-atts{
-	margin-left:5px; margin-bottom:1px;
+	color:#2F6384;
+}
+.all-tech-atts span{
+	color:#5d6165; 
 }
 .tinner{
 	min-height: 200px!important;
 }	
-.h3InfoIcon {
+.etInfoIcon {
     margin-bottom:-4px; margin-left:3px; cursor:pointer;
 }

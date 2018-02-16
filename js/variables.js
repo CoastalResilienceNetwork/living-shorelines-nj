@@ -8,6 +8,8 @@ function ( declare ) {
 			makeVariables: function(t){
 				t.county = "";
 				t.atts = [];
+				t.picSrc = "";
+				t.munUrl = "";
 				// layer IDs
 				t.allTech_tidalMarsh_ras = 12;
 				t.allTech_tidalMarsh_pnt = 13;

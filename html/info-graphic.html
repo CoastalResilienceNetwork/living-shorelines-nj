@@ -1,6 +1,6 @@
 <style type="text/css">
 	.infopiccloser-nj {
-    	position:absolute; top:9px; right:4px;  color:#333; cursor:pointer;
+    	position:absolute; top:3px; right:3px; color:#333; cursor:pointer;
 	}
 	.infopiccloser-nj .button{
 		font-size:14px; padding:1px 6px; font-weight:bold;
@@ -12,25 +12,30 @@
 		color:#2F6384;
 	}
 	.infoPic-wrap{
-		margin-bottom:-7px; position:relative; top:60px; background:#a8b38e;
+		position:relative; top:-5px;
 	}
 	.info-wrap-nj{
-		position:relative;
+		position:relative; background:#f7f7f7;
 	}	
 	.info-wrap-nj .toggle-btn{
-  		width:651px; margin-bottom:-6px; font-size:12px; position:absolute; z-index:500; top:-1px;
+  		width:651px; margin-bottom:-6px; font-size:12px; position:relative; z-index:500; 
 	}
 	.info-wrap-nj .toggle-btn label{
-		margin-top:0px;
+		margin-top:0px; flex:1;
 	}
 	.info-wrap-nj .toggle-btn label:last-of-type{
 		margin-right:0px;
 	}
+	#lsInfoTitle{
+		color:#000; font-size:14px; text-align:center; padding:5px 0px 6px 0px;
+	}
 </style>
 <div class="info-wrap-nj">
+	<div class="infopiccloser-nj"><button class="button button-default">X</button></div>
+	<div id="lsInfoTitle">Shoreline Enhancement Techniques</div>
 	<div id="lsInfoToggle" class="toggle-btn">
 		<input type="radio" id="ch1" name="ch" value="Nature-based_Living_Shoreline"/>
-		<label for="ch1">Nature-based Living Shoreline</label>
+		<label style="flex:2;" for="ch1">Nature-based Living Shoreline</label>
 		<input type="radio" id="ch2" name="ch" value="Living_Reef_Breakwater"/>
 		<label for="ch2">Living Reef Breakwater</label>
 		<input type="radio" id="ch3" name="ch" value="Marsh_Sill"/>
@@ -38,12 +43,11 @@
 		<input type="radio" id="ch4" name="ch" value="Breakwater"/>
 		<label for="ch4">Breakwater</label>
 		<input type="radio" id="ch5" name="ch" value="Ecologically_Enhanced_Revetment"/>
-		<label for="ch5">Ecologically Enhanced Revetment</label>
+		<label style="flex:2;" for="ch5">Ecologically Enhanced Revetment</label>
 		<input type="radio" id="ch6" name="ch" value="Beach_Restoration"/>
 		<label for="ch6">Beach Restoration</label>
 	</div>
 	<div class="infoPic-wrap">
-		<div class="infopiccloser-nj"><button class="button button-default">X</button></div>
 		<img id="lsnj-img" src="plugins/living-shorelines-nj/images/Breakwater.jpg" alt="Descriptions of enhancement techniques">
 	</div>
 </div>
