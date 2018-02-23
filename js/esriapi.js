@@ -10,11 +10,19 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 
         return declare(null, {
 			esriApiFunctions: function(t){	
+				// initialize slider
+				$("#" + t.id + "ls-sldr").slider({ min: 0, max: 10, range: false, values: [t.obj.sliderVal],
+					change: function( event, ui ) {
+        				t.obj.sliderVal = 1-ui.value/10;
+        				t.dynamicLayer.setOpacity(t.obj.sliderVal);
+        			}
+				})
 				// Add dynamic map service
-				t.dynamicLayer = new ArcGISDynamicMapServiceLayer(t.url, {opacity:0.7});
+				t.dynamicLayer = new ArcGISDynamicMapServiceLayer(t.url, {opacity:1 - t.obj.sliderVal/10});
 				t.map.addLayer(t.dynamicLayer);
 				if (t.obj.visibleLayers.length > 0){	
 					t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+					$("#" + t.id + "ls-bottom").css("display", "flex");
 				}
 				t.dynamicLayer.on("load", function () { 			
 					t.layersArray = t.dynamicLayer.layerInfos;				
@@ -75,6 +83,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.obj.visibleLayers = [];
 				t.obj.visibleLayers.push(t[t.viewResults + "_" + t.slType + "_ras"])
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+				$("#" + t.id + "ls-bottom").css("display", "flex");
 				// feature layer for all techniques click			
 				t.featureLayerOD = new FeatureLayer(t.url + "/" + t[t.viewResults + "_" + t.slType + "_pnt"], { mode: esri.layers.FeatureLayer.ONDEMAND, opacity:"0", outFields:"*" } );
 				t.featureLayerOD.setRenderer(new SimpleRenderer(t.pntSym));
@@ -118,14 +127,94 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				});
 				t.map.addLayer(t.featureLayerOD);
 			},
+			indTechniques: function(t){
+				t.map.graphics.clear();
+				// feature layer for all techniques click	
+				var urlVal = Number(t.indTechVal) + 1 	
+				t.featureLayerOD = new FeatureLayer(t.url + "/" + urlVal, { mode: esri.layers.FeatureLayer.ONDEMAND, opacity:"0", outFields:"*" } );
+				t.featureLayerOD.setRenderer(new SimpleRenderer(t.pntSym));
+				t.featureLayerOD.on("mouse-over", function(evt){
+					t.map.setMapCursor("pointer");
+				});
+				t.featureLayerOD.on("mouse-out", function(evt){
+					t.map.setMapCursor("default");
+				});
+				t.featureLayerOD.on("mouse-down", function(evt){
+					$(".iti-instr").hide();
+					$("#" + t.id + "iti-hdr").html(t.indTechName)
+					$("#" + t.id + "iti-wrap").slideDown();
+					var atts = evt.graphic.attributes;
+					$("#" + t.id + "it-techs-wrap .it-atts").each(function(i,v){
+						var field = v.id.split("-").pop();
+						var fieldThresh = field + "Threshold";
+						var fieldParams = field + "Value";
+						if (atts[field]){
+							$("#" + v.id).html("<b>" + atts[field] + "</b>")
+						}else{
+							if (atts[fieldThresh] == 0){
+								$("#" + v.id).html("Not Applicable");
+								$("#" + v.id).next().hide();	
+								$("#" + v.id).parent().css("font-weight", "normal");
+							}
+							if (field == "IceCoverCriteria"){
+								var iceNum = Math.round(atts[fieldParams])
+								if (Math.round(iceNum) == "0"){t.icv = "None"}
+								if (Math.round(iceNum) == "2"){t.icv = "Low"}
+								if (Math.round(iceNum) == "4"){t.icv = "Moderate"}
+								if (Math.round(iceNum) == "6"){t.icv = "High"}
+								if (Math.round(iceNum) == "8"){t.icv = "Higher"}
+								if (Math.round(iceNum) == "10"){t.icv = "Highest"}
+								if (atts[fieldThresh] == 1){
+									$("#" + v.id).html("No - " + t.icv);
+									$("#" + v.id).next().show();
+									$("#" + v.id).parent().css("font-weight", "normal");
+								}	
+								if (atts[fieldThresh] == 2){
+									$("#" + v.id).html("No - " + t.icv);
+									$("#" + v.id).next().show();
+									$("#" + v.id).parent().css("font-weight", "bold");
+								}	
+							}else{	
+								if (atts[fieldThresh] == 1){
+									if ( isNaN(atts[fieldParams]) == false ){
+										var val = Math.round(atts[fieldParams] * 10) / 10;
+										$("#" + v.id).html("No - " + val);
+									}else{
+										$("#" + v.id).html("No - " + atts[fieldParams]);
+									}
+									$("#" + v.id).next().show();
+									$("#" + v.id).parent().css("font-weight", "normal");
+								}
+								if (atts[fieldThresh] == 2){
+									if ( isNaN(atts[fieldParams]) == false ){
+										var val = Math.round(atts[fieldParams] * 10) / 10;
+										$("#" + v.id).html("Yes - " + val);
+									}else{
+										$("#" + v.id).html("Yes - " + atts[fieldParams]);
+									}
+									$("#" + v.id).next().show();
+									$("#" + v.id).parent().css("font-weight", "bold");
+								}
+							}	
+						}	
+					});	
+
+					t.map.graphics.clear();
+					t.selectedGraphic = new Graphic(evt.graphic.geometry,t.pntSym);
+					t.map.graphics.add(t.selectedGraphic);
+				});
+				t.map.addLayer(t.featureLayerOD);
+			},	
 			clearLayers: function(t){
 				if (t.featureLayerOD){
 					t.map.removeLayer(t.featureLayerOD);
 				}
 				t.obj.visibleLayers = [];
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+				$("#" + t.id + "ls-bottom").hide()
 				t.map.graphics.clear();
 				$("#" + t.id + "ati-wrap").slideUp();
+				$("#" + t.id + "iti-wrap").slideUp();
 			}				
 		});
     }
