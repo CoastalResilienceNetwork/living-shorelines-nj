@@ -1,11 +1,11 @@
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
 	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/text!./obj.json", 
-	"dojo/text!./html/content.html", "dojo/text!./html/info-graphic.html", './js/esriapi', './js/clicks', './js/variables', 'dojo/_base/lang'	
+	"dojo/text!./html/content.html", "dojo/text!./html/enh-techs.html", "dojo/text!./html/env-conds.html", "./js/esriapi", "./js/clicks", "./js/variables", "dojo/_base/lang"	
 ],
-function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, infoGraphic, esriapi, clicks, variables, lang ) {
+function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, enhTechs, envConds, esriapi, clicks, variables, lang ) {
 	return declare(PluginBase, {
-		// The height and width are set here when an infographic is defined. When the user click Continue it rebuilds the app window with whatever you put in.
+		// app properties
 		toolbarName: "Living Shoreline", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
 		hasCustomPrint: false, size:'custom', width:390, hasHelp:false, fullName: "Living Shoreline",
 		
@@ -85,12 +85,16 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			var idUpdate0 = content.replace(/for="/g, 'for="' + this.id);	
 			var idUpdate = idUpdate0.replace(/id="/g, 'id="' + this.id);
 			$('#' + this.id).html(idUpdate);
-			// add info-graphic div
-			this.infoDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; height:390px; overflow-y:hidden; border-radius:3px;' });
-			this.infoID = this.infoDiv.id;
-			dom.byId('map-0').appendChild(this.infoDiv.domNode);
-			//
-			$('#' + this.infoID).html(infoGraphic);
+			// add enhancement techniques div
+			this.enhTechDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; height:390px; overflow-y:hidden; border-radius:3px;' });
+			this.enhTechID = this.enhTechDiv.id;
+			dom.byId('map-0').appendChild(this.enhTechDiv.domNode);
+			$('#' + this.enhTechID).html(enhTechs);
+			// add environmental conditions div
+			this.envConDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; height:390px; overflow-y:hidden; border-radius:3px;' });
+			this.envConID = this.envConDiv.id;
+			dom.byId('map-0').appendChild(this.envConDiv.domNode);
+			$('#' + this.envConID).html(envConds);
 			// Set up variables
 			this.variables.makeVariables(this);
 			// Click listeners

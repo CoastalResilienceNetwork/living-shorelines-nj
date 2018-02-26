@@ -1,0 +1,54 @@
+<style type="text/css">
+	.infopiccloser-nj {
+    	position:absolute; top:3px; right:3px; color:#333; cursor:pointer;
+	}
+	.infopiccloser-nj .button{
+		font-size:14px; padding:1px 6px; font-weight:bold;
+	}
+	.infopiccloser-nj:hover{
+		color:#0096D6;
+	}
+	.infopiccloser-nj:active{
+		color:#2F6384;
+	}
+	.infoPic-wrap{
+		position:relative; top:-5px;
+	}
+	.info-wrap-nj{
+		position:relative; background:#f7f7f7;
+	}	
+	.info-wrap-nj .toggle-btn{
+  		width:651px; margin-bottom:-6px; font-size:12px; position:relative; z-index:500; 
+	}
+	.info-wrap-nj .toggle-btn label{
+		margin-top:0px; flex:1;
+	}
+	.info-wrap-nj .toggle-btn label:last-of-type{
+		margin-right:0px;
+	}
+	#ecTitle{
+		color:#000; font-size:14px; text-align:center; padding:5px 0px 6px 0px;
+	}
+	#ecTitle span{
+		font-weight:bold;
+	}
+</style>
+<div class="info-wrap-nj">
+	<div class="infopiccloser-nj"><button class="button button-default">X</button></div>
+	<div id="ecTitle">How each restoration technique meets the <span id="ecTitleSpan">Shoreline Change Rate</span> condition</div>
+	<div id="ecToggle" class="toggle-btn">
+		<input type="radio" id="ec1" name="ec" value="Shoreline Change Rate"/>	<label for="ec1">Shoreline Change Rate</label>
+		<input type="radio" id="ec2" name="ec" value="Tidal Range"/>			<label for="ec2">Tidal Range</label>
+		<input type="radio" id="ec3" name="ec" value="Salinity"/>				<label for="ec3">Salinity</label>
+		<input type="radio" id="ec4" name="ec" value="Wave Height"/>			<label for="ec4">Wave Height</label>
+		<input type="radio" id="ec5" name="ec" value="Ice Cover"/>				<label for="ec5">Ice Cover</label>
+		<input type="radio" id="ec6" name="ec" value="Shoreline Slope"/>		<label for="ec6">Shoreline Slope</label>
+		<input type="radio" id="ec7" name="ec" value="Nearshore Slope"/>		<label for="ec7">Nearshore Slope</label>
+	</div>
+	<div class="infoPic-wrap">
+		<table id="ecTable" class='ec-tbl'>
+			<thead><tr></tr></thead>
+			<tbody class='tbodyc'></tbody>
+		</table>
+	</div>
+</div>

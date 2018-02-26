@@ -99,7 +99,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				})
 				// forth choice radios
 				$(".etWrap input").click(function(c){
-					$(".iti-instr").show();
+					$("#" + t.id + "iti-instr").show();
 					$(".iti-wrap").hide();
 					var valArray = c.currentTarget.value.split("/");
 					t.indTechVal = valArray[0];
@@ -150,16 +150,34 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						}
 					}
 				})
+				// Environmental conditions info clicks
+				$("#" + t.id + "env-cond-wrap .ls-info").click(function(c){
+					var tgt = c.currentTarget.id.split("-").pop();
+					$("#" + t.id + "info-" + tgt ).hide();
+					if (tgt == "show"){	
+						$("#" + t.id + "info-hide").css("display", "inline-block");
+						$("#" + t.id + "env-cond-instr").slideDown();
+					}
+					if (tgt == "hide"){
+						$("#" + t.id + "info-show").css("display", "inline-block");
+						$("#" + t.id + "env-cond-instr").slideUp();	
+					}
+				})
+				// Environmental conditions info clicks
+				$.each(t.envCondTable,function(i,v){
+					//console.log(v)
+				})
+
 				// Enhancement techniques info-graphic functions
 				$("#" + t.id + "showEtInfo").click(function(c){
 					if (t.picSrc == ""){
 						t.picSrc = "Nature-based_Living_Shoreline";
 						$("#lsInfoToggle input[value='" + t.picSrc + "']").trigger("click");
 					}					
-					$("#" + t.infoID).show();
+					$("#" + t.enhTechID).show();
 				})
 				$(".infopiccloser-nj").click(function(){
-					$("#" + t.infoID).hide();
+					$("#" + t.enhTechID).hide();
 				})
 				$("#lsInfoToggle input").click(function(c){
 					t.picSrc = c.currentTarget.value;
@@ -178,6 +196,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 			hideEnvConds: function(t){
 				$("#" + t.id + "env-cond-wrap").hide();
 				$("#" + t.id + "env-cond-wrap input").prop("checked", false);
+				$("#" + t.id + "iti-instr").hide();
 			}
         });
     }

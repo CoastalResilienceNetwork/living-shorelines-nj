@@ -1,6 +1,9 @@
 .ls-wrap h4{
 	margin-bottom:1rem; margin-top:1.5rem;
 }
+.ls-wrap h4 img{
+	margin-bottom:-4px; margin-left:4px; cursor:pointer;
+}	
 .ls-wrap{
 	margin-bottom:50px;
 }
@@ -34,8 +37,14 @@
 .all-tech-info, .ind-tech-inch{
 	padding:0px;
 }
-.ati-instr, .iti-instr{
+.ati-instr, .iti-instr, .env-cond-instr{
 	color:#2F6384; margin:0 10px 6px 21px;
+}
+.env-cond-instr{
+	margin-left:0px; display:none;
+}
+.iti-instr{
+	display:none;
 }
 .ati-hdr, .iti-hdr{
 	text-decoration:underline; font-weight:900;
@@ -69,4 +78,7 @@
 }
 .ind-teah-cb-indent{
 	margin-left:20px;
+}
+.ls-info-close{
+	display:none;
 }

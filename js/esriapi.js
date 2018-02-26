@@ -140,7 +140,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 					t.map.setMapCursor("default");
 				});
 				t.featureLayerOD.on("mouse-down", function(evt){
-					$(".iti-instr").hide();
+					$("#" + t.id + "iti-instr").hide();
 					$("#" + t.id + "iti-hdr").html(t.indTechName)
 					$("#" + t.id + "iti-wrap").slideDown();
 					var atts = evt.graphic.attributes;
