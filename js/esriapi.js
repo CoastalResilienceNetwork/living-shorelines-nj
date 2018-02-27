@@ -154,7 +154,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 							if (atts[fieldThresh] == 0){
 								$("#" + v.id).html("Not Applicable");
 								$("#" + v.id).next().hide();	
-								$("#" + v.id).parent().css("font-weight", "normal");
+								$("#" + v.id).parent().css("font-weight", "bold");
 							}
 							if (field == "IceCoverCriteria"){
 								var iceNum = Math.round(atts[fieldParams])
@@ -165,12 +165,14 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 								if (Math.round(iceNum) == "8"){t.icv = "Higher"}
 								if (Math.round(iceNum) == "10"){t.icv = "Highest"}
 								if (atts[fieldThresh] == 1){
+									console.log(1)
 									$("#" + v.id).html("No - " + t.icv);
 									$("#" + v.id).next().show();
 									$("#" + v.id).parent().css("font-weight", "normal");
 								}	
 								if (atts[fieldThresh] == 2){
-									$("#" + v.id).html("No - " + t.icv);
+									console.log(2)
+									$("#" + v.id).html("Yes - " + t.icv);
 									$("#" + v.id).next().show();
 									$("#" + v.id).parent().css("font-weight", "bold");
 								}	
