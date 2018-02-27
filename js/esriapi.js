@@ -165,13 +165,11 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 								if (Math.round(iceNum) == "8"){t.icv = "Higher"}
 								if (Math.round(iceNum) == "10"){t.icv = "Highest"}
 								if (atts[fieldThresh] == 1){
-									console.log(1)
 									$("#" + v.id).html("No - " + t.icv);
 									$("#" + v.id).next().show();
 									$("#" + v.id).parent().css("font-weight", "normal");
 								}	
 								if (atts[fieldThresh] == 2){
-									console.log(2)
 									$("#" + v.id).html("Yes - " + t.icv);
 									$("#" + v.id).next().show();
 									$("#" + v.id).parent().css("font-weight", "bold");
