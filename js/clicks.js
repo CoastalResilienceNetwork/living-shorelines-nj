@@ -35,6 +35,8 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						t.mun = c.target.value;
 						$.each(t.atts,function(i,v){
 							if (v.MUN == t.mun){
+								$("#zoomToMunNj").html(v.MUN);
+								$("#zoomToMilesNj").html(v.totalShorelineMiles);
 								t.munUrl = "http://www.njfloodmapper.org/snapshot/#/process?action=tncre&mun_code=" + v.MUN_CODE;
 							}
 						})
@@ -69,6 +71,8 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				// third choice radios
 				$("#" + t.id + "view-results input").click(function(c){
 					t.viewResults = c.currentTarget.value;
+					$(".zoomToInstr").hide();
+					$(".zoomTo-" + t.viewResults).show();
 					$("#" + t.id + "view-ind-techs input:radio[name='teTechs']").prop("checked", false)
 					$("#" + t.id + "view-ind-techs input:radio[name='fbTechs']").prop("checked", false)
 					$(".iti-wrap").hide();
@@ -80,8 +84,13 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						$("#" + t.id + "all-tech-info").slideDown();
 						$(".view-ind-techs").hide();
 						t.esriapi.allTechniques(t);
+						var l = t.map.getLevel();
+						if (l < 17){
+							$('#' + t.zoomToID).show();
+						}
 					}
 					if (t.viewResults == "ind-tech"){
+						$('#' + t.zoomToID).hide();
 						if (t.slType == "tidalMarsh"){
 							$("#" + t.id + "forestBeachBulk-etWrap").hide();
 							$("#" + t.id + "tidalMarsh-etWrap").slideDown();
@@ -104,6 +113,11 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					var valArray = c.currentTarget.value.split("/");
 					t.indTechVal = valArray[0];
 					t.indTechName = valArray[1];
+					$("#zoomToEnTech").html(t.indTechName);
+					var l = t.map.getLevel()
+					if (l < 17){
+						$('#' + t.zoomToID).show();
+					}
 					$("#" + t.id + "ind-tech-cb-label").html(t.indTechName);
 					$("#" + t.id + "ind-tech-cb").val(t.indTechVal).prop("checked", true);
 					t.obj.visibleLayers = [];
@@ -242,6 +256,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				$("#" + t.id + "env-cond-wrap input").prop("checked", false);
 				$("#" + t.id + "iti-instr").hide();
 				$("#" + t.envConID).hide();
+				$('#' + t.zoomToID).hide();
 			}
         });
     }

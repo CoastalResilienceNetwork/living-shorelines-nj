@@ -1,9 +1,9 @@
 // Bring in dojo and javascript api classes as well as varObject.json, js files, and content.html
 define([
 	"dojo/_base/declare", "framework/PluginBase", "dijit/layout/ContentPane", "dojo/dom", "dojo/dom-style", "dojo/dom-geometry", "dojo/text!./obj.json", 
-	"dojo/text!./html/content.html", "dojo/text!./html/enh-techs.html", "dojo/text!./html/env-conds.html", "./js/esriapi", "./js/clicks", "./js/variables", "dojo/_base/lang"	
+	"dojo/text!./html/content.html", "dojo/text!./html/enh-techs.html", "dojo/text!./html/env-conds.html", "dojo/text!./html/zoom-to.html", "./js/esriapi", "./js/clicks", "./js/variables", "dojo/_base/lang"	
 ],
-function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, enhTechs, envConds, esriapi, clicks, variables, lang ) {
+function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, content, enhTechs, envConds, zoomTo, esriapi, clicks, variables, lang ) {
 	return declare(PluginBase, {
 		// app properties
 		toolbarName: "Living Shoreline", showServiceLayersInLegend: true, allowIdentifyWhenActive: false, rendered: false, resizable: false,
@@ -96,6 +96,11 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			this.envConID = this.envConDiv.id;
 			dom.byId('map-0').appendChild(this.envConDiv.domNode);
 			$('#' + this.envConID).html(envConds);
+			// add environmental conditions div
+			this.zoomToDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:50%; width:380px; margin-left:-190px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; border-radius:3px; background:#fff;' });
+			this.zoomToID = this.zoomToDiv.id;
+			dom.byId('map-0').appendChild(this.zoomToDiv.domNode);
+			$('#' + this.zoomToID).html(zoomTo);
 			// Set up variables
 			this.variables.makeVariables(this);
 			// Click listeners
