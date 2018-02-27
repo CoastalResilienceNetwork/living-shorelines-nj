@@ -92,7 +92,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			dom.byId('map-0').appendChild(this.enhTechDiv.domNode);
 			$('#' + this.enhTechID).html(enhTechs);
 			// add environmental conditions div
-			this.envConDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; height:390px; overflow-y:hidden; border-radius:3px;' });
+			this.envConDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:10px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; overflow-y:hidden; border-radius:3px; background:#fff;' });
 			this.envConID = this.envConDiv.id;
 			dom.byId('map-0').appendChild(this.envConDiv.domNode);
 			$('#' + this.envConID).html(envConds);
