@@ -11,11 +11,11 @@
 	.infopiccloser-nj:active{
 		color:#2F6384;
 	}
-	.infoPic-wrap{
-		position:relative; top:-5px;
+	.ecTable-wrap{
+		position:relative; margin:12px 10px 10px 10px; background:#fff;
 	}
 	.info-wrap-nj{
-		position:relative; background:#f7f7f7;
+		position:relative; background:#fff;
 	}	
 	.info-wrap-nj .toggle-btn{
   		width:651px; margin-bottom:-6px; font-size:12px; position:relative; z-index:500; 
@@ -27,10 +27,28 @@
 		margin-right:0px;
 	}
 	#ecTitle{
-		color:#000; font-size:14px; text-align:center; padding:5px 0px 6px 0px;
+		color:#000; font-size:14px; text-align:center; padding:5px 0px 6px 0px; background:#f7f7f7;
 	}
 	#ecTitle span{
 		font-weight:bold;
+	}
+	#ecTable{
+		box-shadow: 0 1px 1px rgba(16,22,26,.2);
+	}
+	.ec-tbl{
+		border:1px solid #ddd; border-collapse:collapse; font-size:9pt; color:#5d6165; padding:3px 5px; 
+	}
+	.ec-thc{
+		width:105px;
+	}
+	.ec-tbodyc tr:nth-child(odd) {
+	  background: #f9fbfe;
+	}
+	.ec-tbodyc{
+		text-align:left;
+	}
+	.ec-dc{
+		text-align:center;
 	}
 </style>
 <div class="info-wrap-nj">
@@ -45,10 +63,10 @@
 		<input type="radio" id="ec6" name="ec" value="Shoreline Slope"/>		<label for="ec6">Shoreline Slope</label>
 		<input type="radio" id="ec7" name="ec" value="Nearshore Slope"/>		<label for="ec7">Nearshore Slope</label>
 	</div>
-	<div class="infoPic-wrap">
+	<div class="ecTable-wrap">
 		<table id="ecTable" class='ec-tbl'>
 			<thead><tr></tr></thead>
-			<tbody class='tbodyc'></tbody>
+			<tbody class='ec-tbodyc'></tbody>
 		</table>
 	</div>
 </div>

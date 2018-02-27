@@ -164,8 +164,31 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					}
 				})
 				// Environmental conditions info clicks
-				$.each(t.envCondTable,function(i,v){
-					//console.log(v)
+				$.each(t.envCondTable.iceCoverMarsh,function(i,v){
+					$.each(v, function(key, valArray){
+						if (key == "header"){
+							$.each(valArray, function(i2, hval){
+								$('#ecTable thead tr').append("<th style='color:#101d28;' class='ec-tbl ec-thc'>" + hval + "</th>")
+							});
+						}else{
+							var tbl = "";
+							$.each(valArray, function(i3, rval){
+								var sty = "#5d6165; font-weight:bold; text-align:left;"
+								if (rval == "Yes"){
+									sty = "green;"
+								}
+								if (rval == "No"){
+									sty = "red;"
+								}
+								if (rval == "NA*"){
+									sty = "#5d6165;"
+									naPresent = "yes"
+								}
+								tbl = tbl + "<td class='ec-tbl ec-tdc' style='color:" + sty + "'>" + rval + "</td>"
+							})
+							$("#ecTable").find("tbody").append("<tr>" + tbl + "</tr>")
+						}
+					})	
 				})
 
 				// Enhancement techniques info-graphic functions
