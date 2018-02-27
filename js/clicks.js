@@ -164,43 +164,64 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					}
 				})
 				// Environmental conditions info clicks
-				$.each(t.envCondTable.iceCoverMarsh,function(i,v){
-					$.each(v, function(key, valArray){
-						if (key == "header"){
-							$.each(valArray, function(i2, hval){
-								$('#ecTable thead tr').append("<th style='color:#101d28;' class='ec-tbl ec-thc'>" + hval + "</th>")
-							});
-						}else{
-							var tbl = "";
-							$.each(valArray, function(i3, rval){
-								var sty = "#5d6165; font-weight:bold; text-align:left;"
-								if (rval == "Yes"){
-									sty = "green;"
-								}
-								if (rval == "No"){
-									sty = "red;"
-								}
-								if (rval == "NA*"){
-									sty = "#5d6165;"
-									naPresent = "yes"
-								}
-								tbl = tbl + "<td class='ec-tbl ec-tdc' style='color:" + sty + "'>" + rval + "</td>"
-							})
-							$("#ecTable").find("tbody").append("<tr>" + tbl + "</tr>")
-						}
-					})	
+				$("#" + t.id + "showEcInfo").click(function(c){
+					$(".ecToggle input[name='ec']:checked").trigger("click");
+					$("#" + t.enhTechID).hide();	
+					$("#" + t.envConID).show();
 				})
-
+				$(".ecToggle input").click(function(c){
+					var ecType = "Upland";
+					if (t.slType == "tidalMarsh"){
+						ecType = "Marsh";
+					}
+					var ecObj = c.currentTarget.value + ecType;
+					$('#ecTable thead').empty();
+					$("#ecTable").find("tbody").empty();
+					var naPresent= "no";
+					$(".ecTableNa").hide();
+					$.each(t.envCondTable[ecObj],function(i,v){
+						$.each(v, function(key, valArray){
+							if (key == "header"){
+								$('#ecTable thead').append("<tr></tr>")
+								$.each(valArray, function(i2, hval){
+									$('#ecTable thead tr').append("<th style='color:#101d28;' class='ec-tbl ec-thc'>" + hval + "</th>")
+								});
+							}else{
+								var tbl = "";
+								$.each(valArray, function(i3, rval){
+									var sty = "#5d6165; font-weight:bold; text-align:left;"
+									if (rval == "Yes"){
+										sty = "green;"
+									}
+									if (rval == "No"){
+										sty = "red;"
+									}
+									if (rval == "NA*"){
+										sty = "#5d6165;"
+										naPresent = "yes"
+									}
+									tbl = tbl + "<td class='ec-tbl ec-tdc' style='color:" + sty + "'>" + rval + "</td>"
+								})
+								$("#ecTable").find("tbody").append("<tr>" + tbl + "</tr>")
+							}
+						})	
+					})
+					if (naPresent == "yes"){
+						$(".ecTableNa").show();
+					}
+				})
 				// Enhancement techniques info-graphic functions
 				$("#" + t.id + "showEtInfo").click(function(c){
 					if (t.picSrc == ""){
 						t.picSrc = "Nature-based_Living_Shoreline";
 						$("#lsInfoToggle input[value='" + t.picSrc + "']").trigger("click");
-					}					
+					}	
+					$("#" + t.envConID).hide();				
 					$("#" + t.enhTechID).show();
 				})
 				$(".infopiccloser-nj").click(function(){
 					$("#" + t.enhTechID).hide();
+					$("#" + t.envConID).hide()
 				})
 				$("#lsInfoToggle input").click(function(c){
 					t.picSrc = c.currentTarget.value;
@@ -220,6 +241,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				$("#" + t.id + "env-cond-wrap").hide();
 				$("#" + t.id + "env-cond-wrap input").prop("checked", false);
 				$("#" + t.id + "iti-instr").hide();
+				$("#" + t.envConID).hide();
 			}
         });
     }

@@ -82,4 +82,7 @@
 .ls-info-close{
 	display:none;
 }
+.showEcInfo{
+	cursor:pointer; color:blue; font-weight:bold;
+}
 

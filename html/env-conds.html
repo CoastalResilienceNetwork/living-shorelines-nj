@@ -29,9 +29,6 @@
 	#ecTitle{
 		color:#000; font-size:14px; text-align:center; padding:5px 0px 6px 0px; background:#f7f7f7;
 	}
-	#ecTitle span{
-		font-weight:bold;
-	}
 	#ecTable{
 		box-shadow: 0 1px 1px rgba(16,22,26,.2);
 	}
@@ -50,23 +47,29 @@
 	.ec-dc{
 		text-align:center;
 	}
+	.ecTableNa{
+	    color: #2F6384; width:630px; margin-top:10px; font-size:12px; display:none;
+	}
 </style>
 <div class="info-wrap-nj">
 	<div class="infopiccloser-nj"><button class="button button-default">X</button></div>
-	<div id="ecTitle">How each restoration technique meets the <span id="ecTitleSpan">Shoreline Change Rate</span> condition</div>
-	<div id="ecToggle" class="toggle-btn">
-		<input type="radio" id="ec1" name="ec" value="Shoreline Change Rate"/>	<label for="ec1">Shoreline Change Rate</label>
-		<input type="radio" id="ec2" name="ec" value="Tidal Range"/>			<label for="ec2">Tidal Range</label>
-		<input type="radio" id="ec3" name="ec" value="Salinity"/>				<label for="ec3">Salinity</label>
-		<input type="radio" id="ec4" name="ec" value="Wave Height"/>			<label for="ec4">Wave Height</label>
-		<input type="radio" id="ec5" name="ec" value="Ice Cover"/>				<label for="ec5">Ice Cover</label>
-		<input type="radio" id="ec6" name="ec" value="Shoreline Slope"/>		<label for="ec6">Shoreline Slope</label>
-		<input type="radio" id="ec7" name="ec" value="Nearshore Slope"/>		<label for="ec7">Nearshore Slope</label>
+	<div id="ecTitle">How each restoration technique meets the selected environmental condition</div>
+	<div id="ecToggle" class="ecToggle toggle-btn">
+		<input type="radio" id="ec1" name="ec" value="shorelineChange" checked/><label for="ec1">Shoreline Change Rate</label>
+		<input type="radio" id="ec2" name="ec" value="tidalRange"/>				<label for="ec2">Tidal Range</label>
+		<input type="radio" id="ec3" name="ec" value="salinity"/>				<label for="ec3">Salinity</label>
+		<input type="radio" id="ec4" name="ec" value="waveHeight"/>				<label for="ec4">Wave Height</label>
+		<input type="radio" id="ec5" name="ec" value="iceCover"/>				<label for="ec5">Ice Cover</label>
+		<input type="radio" id="ec6" name="ec" value="shorelineSlope"/>			<label for="ec6">Shoreline Slope</label>
+		<input type="radio" id="ec7" name="ec" value="nearshoreSlope"/>			<label for="ec7">Nearshore Slope</label>
 	</div>
 	<div class="ecTable-wrap">
 		<table id="ecTable" class='ec-tbl'>
-			<thead><tr></tr></thead>
+			<thead></thead>
 			<tbody class='ec-tbodyc'></tbody>
 		</table>
+		<div class="ecTableNa">
+			*NA signifies that this environmental parameter is either not applicable for this technique or when a particular parameter value range is not applicable.  Where NA occurs, it is treated as a YES in determining the number of environmental conditions that have been satisfied.
+		</div>
 	</div>
 </div>
