@@ -59,7 +59,6 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				t.pntSym = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 8, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0,255,0]), 1.5), new Color([255,255,0,0.1]));
 				t.map.on ("extent-change", function(e,x,b,l){	 
 					t.l = e.lod.level	
-					console.log(t.l)
 					if (t.l < 18) { t.pntSym.size = 10; }
 					if (t.l == 18){ t.pntSym.size = 20; }
 					if (t.l == 19){ t.pntSym.size = 42; }	
