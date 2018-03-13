@@ -73,7 +73,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			this.variables = new variables();
 			// ADD HTML TO APP
 			// Define Content Pane as HTML parent		
-			this.appDiv = new ContentPane({style:'padding:8px; flex:1; display:flex; flex-direction:column; height:100%;'});
+			this.appDiv = new ContentPane({style:'padding:8px; height:100%;'});
 			this.id = this.appDiv.id
 			dom.byId(this.container).appendChild(this.appDiv.domNode);	
 			// hide minimize for this app
