@@ -15,15 +15,13 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			declare.safeMixin(this, frameworkParameters);
 			// Define object to access global variables from JSON object. Only add variables to varObject.json that are needed by Save and Share. 
 			this.obj = dojo.eval("[" + obj + "]")[0];	
-			this.url = "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/New_Jersey/LivingShorelinesNJ/MapServer";
+			this.url = "https://services.coastalresilience.org/arcgis/rest/services/New_Jersey/LivingShorelinesNJ/MapServer";
 			this.layerDefs = [];
 		},
 		// Called after initialize at plugin startup (why the tests for undefined). Also called after deactivate when user closes app by clicking X. 
 		hibernate: function () {
 			if (this.appDiv != undefined){
-				this.esriapi.clearLayers(this);
-				this.obj.visibleLayers = [-1];
-				this.dynamicLayer.setVisibleLayers(this.obj.visibleLayers);
+				$("#" + this.id + "selectCounty").val('').trigger("chosen:updated").trigger("change");
 			}
 			this.open = "no";
 		},
@@ -40,7 +38,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 		},
 		// Called when user hits the minimize '_' icon on the pluging. Also called before hibernate when users closes app by clicking 'X'.
 		deactivate: function () {
-			this.open = "no";	
+			this.hibernate();	
 		},	
 		// Called when user hits 'Save and Share' button. This creates the url that builds the app at a given state using JSON. 
 		// Write anything to you varObject.json file you have tracked during user activity.		
@@ -78,7 +76,8 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			this.appDiv = new ContentPane({style:'padding:8px; flex:1; display:flex; flex-direction:column; height:100%;'});
 			this.id = this.appDiv.id
 			dom.byId(this.container).appendChild(this.appDiv.domNode);	
-			$('#' + this.id).parent().addClass('flexColumn')
+			// hide minimize for this app
+			$('#' + this.id).parent().parent().find(".plugin-minimize").hide();
 			if (this.obj.stateSet == "no"){
 				$('#' + this.id).parent().parent().css('display', 'flex')
 			}		
@@ -96,7 +95,7 @@ function ( 	declare, PluginBase, ContentPane, dom, domStyle, domGeom, obj, conte
 			this.envConID = this.envConDiv.id;
 			dom.byId('map-0').appendChild(this.envConDiv.domNode);
 			$('#' + this.envConID).html(envConds);
-			// add environmental conditions div
+			// add zoomTo div
 			this.zoomToDiv = new ContentPane({style:'display:none; position:absolute; top:8px; left:50%; width:380px; margin-left:-190px; box-shadow:2px 2px 3px rgba(0,0,0,0.4); border:1px solid #444; border-radius:3px; background:#fff;' });
 			this.zoomToID = this.zoomToDiv.id;
 			dom.byId('map-0').appendChild(this.zoomToDiv.domNode);

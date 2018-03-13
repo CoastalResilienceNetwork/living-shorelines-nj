@@ -25,8 +25,14 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						$('#' + t.id + 'selectMuni').trigger("chosen:updated");
 						$(c.target).parent().parent().next().show()
 						$("#" + t.id + "ls-btn-wrap").hide();
+						$("#" + t.id + "view-results").hide();
+						$("#" + t.id + "view-ind-techs").hide();
 						$(".ls-first-choice-wrap").hide();
+						$(".infopiccloser-nj").trigger("click");
+						$("#" + t.zoomToID + " .zoomtocloser-nj button").trigger("click");
 						t.clicks.hideEnvConds(t);
+						t.obj.visibleLayers = [];
+						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers)
 						t.esriapi.clearLayers(t);
 					});
 				// municipalities select
@@ -54,21 +60,11 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					$(".ls-choice-wraps").hide();
 					t.clicks.hideEnvConds(t);
 					t.esriapi.clearLayers(t);
-					$(".dis-pro").css("display", "flex")
-					$("#" + t.id + "dis-pro input").prop("checked", false)
-					t.clicks.clearInputs(t);
-				})
-				// second choice radios	
-				$("#" + t.id + "dis-pro input").click(function(c){
-					$(".ls-choice-wraps").hide();
-					t.clicks.hideEnvConds(t);
-					t.esriapi.clearLayers(t);
-					$(".dis-pro").css("display", "flex")
 					$(".view-results").css("display", "flex")
 					$(".ls-results-wrap").hide();
 					t.clicks.clearInputs(t);
 				})
-				// third choice radios
+				// second choice radios
 				$("#" + t.id + "view-results input").click(function(c){
 					t.viewResults = c.currentTarget.value;
 					$(".zoomToInstr").hide();
@@ -77,7 +73,6 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					$("#" + t.id + "view-ind-techs input:radio[name='fbTechs']").prop("checked", false)
 					$(".iti-wrap").hide();
 					t.clicks.hideEnvConds(t);
-					$(".dis-pro").css("display", "flex");
 					$(".view-results").css("display", "flex");
 					if (t.viewResults == "allTech"){
 						$(".ati-instr").show();
@@ -101,12 +96,12 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 						}
 						$(".view-ind-techs").slideDown();
 						$("#" + t.id + "all-tech-info").hide();
-						t.obj.visibleLayers = [];
+						t.obj.visibleLayers = [0];
 						t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers)
 						$("#" + t.id + "ls-bottom").hide();
 					}
 				})
-				// forth choice radios
+				// third choice radios
 				$(".etWrap input").click(function(c){
 					$("#" + t.id + "iti-instr").show();
 					$(".iti-wrap").hide();
@@ -120,7 +115,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 					}
 					$("#" + t.id + "ind-tech-cb-label").html(t.indTechName);
 					$("#" + t.id + "ind-tech-cb").val(t.indTechVal).prop("checked", true);
-					t.obj.visibleLayers = [];
+					t.obj.visibleLayers = [0];
 					t.obj.visibleLayers.push(t.indTechVal);
 					t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 					t.esriapi.indTechniques(t);
@@ -180,6 +175,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				// Environmental conditions info clicks
 				$("#" + t.id + "showEcInfo").click(function(c){
 					$(".ecToggle input[name='ec']:checked").trigger("click");
+					$('#' + t.zoomToID).hide();
 					$("#" + t.enhTechID).hide();	
 					$("#" + t.envConID).show();
 				})
@@ -245,6 +241,10 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 				$("#" + t.id + "showMunRep").click(function(){
 					window.open(t.munUrl);
 				})
+				//Zoom in message closer
+				$("#" + t.zoomToID + " .zoomtocloser-nj button").click(function(){
+					$('#' + t.zoomToID).hide();
+				});
 			},
 			clearInputs: function(t){
 				$("#" + t.id + "view-results input:radio[name='techs']").prop("checked", false)
