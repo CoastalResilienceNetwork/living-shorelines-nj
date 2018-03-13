@@ -78,9 +78,14 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				qt.execute(q, function(e){
 					t.map.setExtent(e.features[0].geometry.getExtent(), true);	
 				});	
+				t.layerDefs = [];
+				t.layerDefs[0] = q.where;
+				t.dynamicLayer.setLayerDefinitions(t.layerDefs);
+				t.obj.visibleLayers = [0];
+				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 			},
 			allTechniques: function(t){
-				t.obj.visibleLayers = [];
+				t.obj.visibleLayers = [0];
 				t.obj.visibleLayers.push(t[t.viewResults + "_" + t.slType + "_ras"])
 				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				$("#" + t.id + "ls-bottom").css("display", "flex");
@@ -209,13 +214,22 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 				if (t.featureLayerOD){
 					t.map.removeLayer(t.featureLayerOD);
 				}
-				t.obj.visibleLayers = [];
-				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
 				$("#" + t.id + "ls-bottom").hide()
 				t.map.graphics.clear();
 				$("#" + t.id + "ati-wrap").slideUp();
 				$("#" + t.id + "iti-wrap").slideUp();
-			}				
+			},
+			closeApp: function(t){
+				if (t.featureLayerOD){
+					t.map.removeLayer(t.featureLayerOD);
+				}
+				$("#" + t.id + "ls-bottom").hide()
+				t.map.graphics.clear();
+				$("#" + t.id + "ati-wrap").slideUp();
+				$("#" + t.id + "iti-wrap").slideUp();
+				t.obj.visibleLayers = [-1];
+				t.dynamicLayer.setVisibleLayers(t.obj.visibleLayers);
+			}			
 		});
     }
 );
