@@ -72,7 +72,7 @@ function ( 	ArcGISDynamicMapServiceLayer, Extent, SpatialReference, Query, Query
 			zoomToMuni: function(t){
 				var q = new Query();
 				var qt = new QueryTask(t.url + "/0" );
-				q.where = "MUN = '" + t.mun + "'";
+				q.where = "COUNTY = '" + t.county + "' AND MUN = '" + t.mun + "'";
 				q.returnGeometry = true;
 				q.outFields = ["OBJECTID"];
 				qt.execute(q, function(e){
