@@ -43,7 +43,7 @@ function ( declare, Query, QueryTask, graphicsUtils, FeatureLayer, SimpleLineSym
 							if (v.MUN == t.mun){
 								$("#zoomToMunNj").html(v.MUN);
 								$("#zoomToMilesNj").html(v.totalShorelineMiles);
-								t.munUrl = "http://54.175.241.254/snapshot/#/process?action=tncre&mun_code=" + v.MUN_CODE;
+								t.munUrl = "https://livingshoreline.s3.us-west-1.amazonaws.com/ls-" + v.MUN_CODE + ".pdf";
 							}
 						})
 						t.esriapi.zoomToMuni(t);
